@@ -1,0 +1,61 @@
+{
+  "skill_name": "scaffold-strict-rust-projects",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Make me a Rust CLI called logtail with a reusable library crate behind it.",
+      "expected_output": "Runs bootstrap with the crate profile, role both, then the full gate, and reports the result line.",
+      "assertions": [
+        "Uses --profile crate (or the default) with --role both",
+        "Runs python3 tools/check.py in the generated project",
+        "Reports the 'All configured checks passed.' line or the failure"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "I need firmware for an STM32F411 that reuses our parsing code.",
+      "expected_output": "Generates the embedded profile, retargets to thumbv7em-none-eabihf in rust-toolchain.toml, .cargo/config.toml, and CI, asks for or cites the memory map, and runs the gate without claiming hardware execution.",
+      "assertions": [
+        "Uses --profile embedded",
+        "Changes the target in all three of rust-toolchain.toml, .cargo/config.toml, and the workflow",
+        "Does not claim the firmware ran on hardware"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Create a Tauri desktop app for note taking. Use npm for the frontend.",
+      "expected_output": "Explains that the tauri profile is Bun-only, proceeds with Bun unless the user objects, generates with --profile tauri, and runs the gate.",
+      "assertions": [
+        "States the profile uses Bun instead of npm",
+        "Uses --profile tauri without --shape, --role, or --mode",
+        "Does not run npm or npx"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "In this generated Tauri app, clippy fails after I added tauri-plugin-dialog. Just allow the lint.",
+      "expected_output": "Does not add allow attributes or lower lints; inspects the diagnostic, fixes at the cause or uses a scoped expect with a reason, or reports that the policy table needs an authorized change.",
+      "assertions": [
+        "Adds no #[allow] and no lint level change in Cargo.toml",
+        "Runs python3 tools/check.py after the fix"
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "Add a wasm export that returns the CRC of a fixed buffer.",
+      "expected_output": "Puts the CRC logic and its test in the portable library and adds a private const extern C export with SAFETY comment and scoped expect(unsafe_code).",
+      "assertions": [
+        "Logic and test live in the portable library, test in <module>/tests.rs",
+        "Export is not pub and carries #[unsafe(no_mangle)] with a SAFETY comment"
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "Why is my Rust iterator chain slow? Profile it.",
+      "expected_output": "The skill does not trigger; this is optimization work.",
+      "assertions": [
+        "scaffold-strict-rust-projects is not loaded"
+      ]
+    }
+  ]
+}

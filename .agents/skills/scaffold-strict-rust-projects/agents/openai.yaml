@@ -1,0 +1,6 @@
+interface:
+  display_name: "Scaffold Strict Rust Projects"
+  short_description: "Generate and extend policy-checked Rust projects"
+  default_prompt: >-
+    Use $scaffold-strict-rust-projects to generate a Rust project with the
+    right profile, run tools/check.py, and report the result.

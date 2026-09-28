@@ -1,0 +1,32 @@
+[template]
+cargo_generate_version = "=0.24.0"
+exclude = ["tools/*.py", "tools/__pycache__/*"]
+
+[placeholders]
+author = { type = "string", prompt = "Project author" }
+year = { type = "string", prompt = "Copyright year (blank for current year)", default = "" }
+profile = { type = "string", prompt = "Project profile", choices = [
+    "crate",
+    "tauri",
+    "wasm",
+    "embedded",
+], default = "crate" }
+
+# Other profiles fix their layout, so only the crate profile asks for it.
+[conditional.'profile == "crate"'.placeholders]
+shape = { type = "string", prompt = "Repository shape", choices = [
+    "root",
+    "workspace",
+], default = "root" }
+role = { type = "string", prompt = "Package role", choices = [
+    "lib",
+    "bin",
+    "both",
+], default = "lib" }
+mode = { type = "string", prompt = "Portability mode", choices = [
+    "host",
+    "portable",
+], default = "host" }
+
+[hooks]
+post = ["tools/cargo-generate.rhai"]

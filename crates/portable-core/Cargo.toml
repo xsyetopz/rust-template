@@ -1,0 +1,19 @@
+[package]
+name = "portable-core"
+version = "0.1.0"
+description = "Allocation-free checked ranges for the Rust policy template"
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+# Prevent accidental publication of the unchanged template package.
+publish = false
+
+[lints]
+workspace = true
+
+[features]
+# Capabilities are opt-in. Forward dependency capabilities here when adding them.
+default = []
+std = []
+# This permits audited unsafe code; it does not add an unsafe implementation.
+unsafe-code = []
